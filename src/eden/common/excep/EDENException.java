@@ -54,13 +54,13 @@ public class EDENException extends Exception {
   }
 
   /** Makes an instance with the given subject, problem, and cause. */
-  public EDENException(String subject, String problem, Throwable cause) {
+  public EDENException(String subject, String problem, Exception cause) {
     this(subject, problem, null, cause);
   }
 
   /** Makes an instance with the given subject, problem, remedy, and cause. */
   public EDENException(
-      String subject, String problem, String remedy, Throwable cause) {
+      String subject, String problem, String remedy, Exception cause) {
     super(makeMessage(subject, problem), cause);
     this.subject = Strings.defaultOrAsIs(NUL_SUBJECT, subject);
     this.problem = Strings.defaultOrAsIs(NUL_PROBLEM, problem);

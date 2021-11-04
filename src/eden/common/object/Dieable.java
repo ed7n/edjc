@@ -25,10 +25,10 @@ public interface Dieable {
   }
 
   /** Marks itself dead with the given cause. */
-  void die(Throwable cause);
+  void die(Exception cause);
 
   /** Returns the cause of its death. */
-  Throwable getObjectDeathCause();
+  Exception getObjectDeathCause();
 
   /** Returns whether it is dead. */
   default boolean isObjectDead() {

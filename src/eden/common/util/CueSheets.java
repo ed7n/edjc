@@ -146,9 +146,11 @@ public class CueSheets {
   /** Checks the given session tracks for errors then returns them. */
   public static List<EDENRuntimeException> checkSyntaxTrack(Session session) {
     List<EDENRuntimeException> out = new LinkedList<>();
-    int expected = 1;
-    for (Track track : session.getTracks())
-      out.addAll(checkSyntax(track, expected++));
+    if (session.hasTracks()) {
+      int expected = session.getTrack(0).getNumber();
+      for (Track track : session.getTracks())
+        out.addAll(checkSyntax(track, expected++));
+    }
     return out;
   }
 
@@ -170,7 +172,7 @@ public class CueSheets {
   }
 
   /** Parses a cuesheet from the given file. */
-  public static CueSheet parse(File file) throws Throwable {
+  public static CueSheet parse(File file) throws Exception {
     CueSheet out;
     try (CueSheetParser parser = new CueSheetParser(file)) {
       out = parser.parse();
@@ -181,7 +183,7 @@ public class CueSheets {
   }
 
   /** Parses a cuesheet from the given reader. */
-  public static CueSheet parse(Reader reader) throws Throwable {
+  public static CueSheet parse(Reader reader) throws Exception {
     CueSheet out;
     try (CueSheetParser parser = new CueSheetParser(reader)) {
       out = parser.parse();
@@ -192,7 +194,7 @@ public class CueSheets {
   }
 
   /** Parses a cuesheet from the given string. */
-  public static CueSheet parse(String string) throws Throwable {
+  public static CueSheet parse(String string) throws Exception {
     try (Reader reader = new StringReader(string)) {
       return parse(reader);
     }

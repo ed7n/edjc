@@ -23,7 +23,7 @@ public class DeadObjectUseException extends EDENRuntimeException {
   }
 
   /** Makes an instance with the given object label and cause. */
-  public DeadObjectUseException(String object, Throwable cause) {
+  public DeadObjectUseException(String object, Exception cause) {
     super(object, PROBLEM, cause);
   }
 }

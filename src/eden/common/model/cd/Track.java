@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class Track extends CDLayoutObject implements CDTextable {
 
+  /** Null instance. */
+  public static final Track nul = new Track(NUL_INT);
+
   /** Maximum track number in a CD. */
   public static final int MAX_NUMBER = 99;
 
@@ -35,10 +38,10 @@ public class Track extends CDLayoutObject implements CDTextable {
   /** Indexes. */
   protected List<Index> indexes;
 
-  /** Media Catalog Number (MCN). */
-  protected String flags;
+  /** Flags. */
+  protected List<String> flags;
 
-  /** CD-TEXT file path. */
+  /** International Standard Recording Code (ISRC). */
   protected String isrc;
 
   /** Performer. */
@@ -64,18 +67,20 @@ public class Track extends CDLayoutObject implements CDTextable {
 
   /** Makes an instance with the given track number. */
   public Track(int number) {
-    this(number, 1, NUL_INT, NUL_INT, null, null, null, null, null, null);
+    this(number, 1, NUL_INT, NUL_INT,
+        new LinkedList<>(), null, null, null, null, null);
   }
 
   /** Makes an instance with the given track number and type. */
   public Track(int number, String type) {
-    this(number, 1, NUL_INT, NUL_INT, null, null, null, null, null, type);
+    this(number, 1, NUL_INT, NUL_INT,
+        new LinkedList<>(), null, null, null, null, type);
   }
 
   /** Makes an instance with the given arguments. */
   public Track(
       int number, int indexCount, int postgap, int pregap,
-      String flags, String isrc, String performer,
+      List<String> flags, String isrc, String performer,
       String songwriter, String title, String type) {
     super();
     Numbers.requireNonNegative(indexCount);
@@ -121,19 +126,29 @@ public class Track extends CDLayoutObject implements CDTextable {
     return hasIndexes() ? getIndexes().remove(getIndexes().size() - 1) : null;
   }
 
+  /** Removes all of its indexes. */
+  public void clearIndexes() {
+    getIndexes().clear();
+  }
+
   /** Returns its FLAGS argument. */
-  public String getFlags() {
+  public List<String> getFlags() {
     return this.flags;
   }
 
-  /** Sets its FLAGS argument. */
-  public void setFlags(String flags) {
-    this.flags = flags;
+  /** Returns its flag at the given index. */
+  public String getFlag(int index) {
+    return getFlags().size() > index ? getFlags().get(index) : null;
   }
 
-  /** Unsets its FLAGS argument. */
-  public void unsetFlags() {
-    setFlags(null);
+  /** Adds the given flag to its FLAGS argument. */
+  public boolean addFlag(String flag) {
+    return getFlags().add(flag);
+  }
+
+  /** Clears its FLAGS argument. */
+  public void clearFlags() {
+    getFlags().clear();
   }
 
   /** Returns its ISRC argument. */
@@ -266,7 +281,7 @@ public class Track extends CDLayoutObject implements CDTextable {
 
   /** Returns whether its FLAGS argument is set. */
   public boolean hasFlags() {
-    return getFlags() != null;
+    return !getFlags().isEmpty();
   }
 
   /** Returns whether it has indexes. */
@@ -325,7 +340,8 @@ public class Track extends CDLayoutObject implements CDTextable {
     out.add(new CueSheetStatement(
         INDENT + TRACK, Numbers.toString2Digits(getNumber()), getType()));
     if (hasFlags())
-      out.add(new CueSheetStatement(INDENT_FLAGS, getFlags()));
+      out.add(new CueSheetStatement(
+          INDENT_FLAGS, String.join(" ", getFlags())));
     getRems().forEach(rem -> out.add(new CueSheetStatement(INDENT_2_REM, rem)));
     if (hasIsrc())
       out.add(new CueSheetStatement(INDENT_ISRC, getIsrc()));

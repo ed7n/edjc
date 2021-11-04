@@ -52,8 +52,8 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   /** Operation mode. */
   protected Mode mode = Mode.SESSION;
 
-  /** Throwable defining its death. */
-  protected Throwable deathCause;
+  /** Exception defining its death. */
+  protected Exception deathCause;
 
   /** Character buffer. */
   protected StringBuilder builder
@@ -145,21 +145,21 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
         else
           parseCustom();
       while (readWord() != null);
-    } catch (Throwable throwable) {
-      die(throwable);
+    } catch (Exception exception) {
+      die(exception);
     }
     return getSheet();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void die(Throwable cause) {
+  public void die(Exception cause) {
     this.deathCause = cause;
   }
 
   /** {@inheritDoc} */
   @Override
-  public Throwable getObjectDeathCause() {
+  public Exception getObjectDeathCause() {
     return this.deathCause;
   }
 
@@ -223,13 +223,13 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   protected void parseCustom() throws IOException {
     switch (getMode()) {
       case SESSION:
-        getSession().setCustom(getString(), flushLine());
+        getSession().setCustom(getString(), readRestOfLine());
         break;
       case TRACK:
-        getTrack().setCustom(getString(), flushLine());
+        getTrack().setCustom(getString(), readRestOfLine());
         break;
       case INDEX:
-        getIndex().setCustom(getString(), flushLine());
+        getIndex().setCustom(getString(), readRestOfLine());
         break;
     }
   }
@@ -247,7 +247,8 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
         throwCommandUnexpectedException();
         break;
       case TRACK:
-        getTrack().setFlags(flushLine());
+        for (String flag : readRestOfLine().split("\\p{Blank}"))
+          getTrack().addFlag(flag);
         break;
     }
   }
@@ -330,13 +331,13 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   protected void parseRem() throws IOException {
     switch (getMode()) {
       case SESSION:
-        getSession().addRem(flushLine());
+        getSession().addRem(readRestOfLine());
         break;
       case TRACK:
-        getTrack().addRem(flushLine());
+        getTrack().addRem(readRestOfLine());
         break;
       case INDEX:
-        getIndex().addRem(flushLine());
+        getIndex().addRem(readRestOfLine());
         break;
     }
   }
@@ -374,14 +375,6 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
     setMode(Mode.TRACK);
   }
 
-  /**
-   * Reads and returns the remaining characters before an end-of-line from its
-   * reader.
-   */
-  protected String flushLine() throws IOException {
-    return isEol() ? NUL_STRING : readLine();
-  }
-
   /** {@link #readItem(boolean)} branch: end-of-line. */
   protected String processEol() {
     this.eol = true;
@@ -402,6 +395,14 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   /** Reads and returns the next line from its reader. */
   protected String readLine() throws IOException {
     return readItem(false);
+  }
+
+  /**
+   * Reads and returns the remaining characters before an end-of-line from its
+   * reader.
+   */
+  protected String readRestOfLine() throws IOException {
+    return isEol() ? NUL_STRING : readLine();
   }
 
   /** Reads and returns the next word from its reader. */

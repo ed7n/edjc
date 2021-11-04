@@ -2,6 +2,6 @@
  * EDEN Java Commons (EDJC) API.
  *
  * @author Brendon
- * @version devA
+ * @version devB
  */
 package eden.common;

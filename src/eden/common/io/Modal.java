@@ -41,7 +41,7 @@ import java.util.Objects;
  * behaviors are similar.
  *
  * @author Brendon
- * @version u0r7, 08/27/2021.
+ * @version u0r8, 11/03/2021.
  */
 public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
@@ -130,8 +130,8 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
   /** Filter bit pattern. */
   protected final byte filter;
 
-  /** Throwable defining its death. */
-  protected Throwable deathCause;
+  /** Exception defining its death. */
+  protected Exception deathCause;
 
   /** Current message mode. To be used in conjunction with `inline`. */
   protected byte mode;
@@ -379,13 +379,13 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** {@inheritDoc} */
   @Override
-  public void die(Throwable cause) {
+  public void die(Exception cause) {
     this.deathCause = cause;
   }
 
   /** {@inheritDoc} */
   @Override
-  public Throwable getObjectDeathCause() {
+  public Exception getObjectDeathCause() {
     return this.deathCause;
   }
 

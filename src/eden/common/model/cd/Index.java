@@ -15,6 +15,9 @@ import java.util.Objects;
  */
 public class Index extends CDLayoutObject {
 
+  /** Null instance. */
+  public static final Index nul = new Index(NUL_INT, NUL_INT);
+
   /** Maximum frame number in a CD. */
   public static final int MAX_FRAME = 449999;
 

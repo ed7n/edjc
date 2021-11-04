@@ -23,7 +23,7 @@ public class NullifiedObjectUseException extends EDENRuntimeException {
   }
 
   /** Makes an instance with the given object label and cause. */
-  public NullifiedObjectUseException(String object, Throwable cause) {
+  public NullifiedObjectUseException(String object, Exception cause) {
     super(object, PROBLEM, cause);
   }
 }
