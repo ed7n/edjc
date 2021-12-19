@@ -1,7 +1,7 @@
 Name: eden/common/
 Specification-Title: EDEN Java Commons API
-Specification-Version: devA
+Specification-Version: devC
 Specification-Vendor: ED7 ENTERTAINMENT
 Implementation-Title: eden.common
-Implementation-Version: devA
+Implementation-Version: devC
 Implementation-Vendor: ED7 ENTERTAINMENT

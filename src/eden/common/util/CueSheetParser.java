@@ -280,7 +280,7 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** {@link #parse()} branch: line ending. */
   protected void parseLineEnding() throws IOException {
-    if (getSheet().hasFile() && !getSheet().getFile().hasLineEnding())
+    if (getSheet().hasFile())
         try (
         Reader readerr
         = Files.newBufferedReader(getSheet().getFile().getFile().toPath())) {
