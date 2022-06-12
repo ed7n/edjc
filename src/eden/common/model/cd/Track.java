@@ -373,7 +373,7 @@ public class Track extends CDLayoutObject implements CDTextable {
     }
     if (hasPostgap())
       out.add(new CueSheetStatement(
-          INDENT_POSTGAP, CDDAFrame.toTimeCode(getPregap())));
+          INDENT_POSTGAP, CDDAFrame.toTimeCode(getPostgap())));
     return out;
   }
 
