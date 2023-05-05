@@ -8,12 +8,9 @@ package eden.common.excep.cd;
 public class SessionEmptyException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The session has no tracks.";
-
+  protected static final String PROBLEM = "The session has no tracks.";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Divide the session into tracks.";
+  protected static final String REMEDY = "Divide the session into tracks.";
 
   /** Makes an instance with the given line number. */
   public SessionEmptyException(long line) {
@@ -26,6 +23,5 @@ public class SessionEmptyException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected SessionEmptyException() {
-  }
+  protected SessionEmptyException() {}
 }

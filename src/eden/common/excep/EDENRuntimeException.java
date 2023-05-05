@@ -17,10 +17,8 @@ public class EDENRuntimeException extends RuntimeException {
 
   /** Subject that has the problem. */
   private final String subject;
-
   /** Problem that the subject has. */
   private final String problem;
-
   /** Suggested remedy to the problem. */
   private final String remedy;
 
@@ -41,7 +39,11 @@ public class EDENRuntimeException extends RuntimeException {
 
   /** Makes an instance with the given subject, problem, remedy, and cause. */
   public EDENRuntimeException(
-      String subject, String problem, String remedy, Exception cause) {
+    String subject,
+    String problem,
+    String remedy,
+    Exception cause
+  ) {
     super(makeMessage(subject, problem), cause);
     this.subject = Strings.defaultOrAsIs(NUL_SUBJECT, subject);
     this.problem = Strings.defaultOrAsIs(NUL_PROBLEM, problem);

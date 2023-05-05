@@ -11,14 +11,13 @@ import eden.common.excep.EDENExceptions;
 public class ISRCMisformatException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisformatProblem(
-          "International Standard Recording Code (ISRC)");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisformatProblem(
+    "International Standard Recording Code (ISRC)"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct the ISRC to have five alphanumeric characters followed by "
-      + "seven numeric characters.";
+  protected static final String REMEDY =
+    "Correct the ISRC to have five alphanumeric characters followed by " +
+    "seven numeric characters.";
 
   /** Makes an instance with the given track number. */
   public ISRCMisformatException(int track) {
@@ -41,6 +40,5 @@ public class ISRCMisformatException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected ISRCMisformatException() {
-  }
+  protected ISRCMisformatException() {}
 }

@@ -19,17 +19,15 @@ public class PlainText extends MediaFile implements Nullifiable {
 
   /** Default character set. */
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-
   /** Byte order mark. */
   public static final char BOM = '\uFEFF';
-
   /** Media type. */
-  public static final MediaType MEDIA_TYPE
-      = new MediaType(MediaTypeType.TEXT, "plain");
-
+  public static final MediaType MEDIA_TYPE = new MediaType(
+    MediaTypeType.TEXT,
+    "plain"
+  );
   /** Character set. */
   protected Charset charset;
-
   /** Line ending. */
   protected LineEnding lineEnding;
 
@@ -76,7 +74,11 @@ public class PlainText extends MediaFile implements Nullifiable {
    * ending.
    */
   public PlainText(
-      File file, String title, Charset charset, LineEnding lineEnding) {
+    File file,
+    String title,
+    Charset charset,
+    LineEnding lineEnding
+  ) {
     this.charset = charset;
     this.file = file;
     this.lineEnding = lineEnding;
@@ -128,8 +130,9 @@ public class PlainText extends MediaFile implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.charset = null;
     this.lineEnding = null;
     super.nullifyObject();
@@ -138,8 +141,14 @@ public class PlainText extends MediaFile implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((PlainText) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((PlainText) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */

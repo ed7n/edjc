@@ -47,59 +47,47 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** Message mode: prompt. */
   public static final byte PROMPT = (byte) 0b00000001;
-
   /** Message mode: information. */
   public static final byte INFO = (byte) 0b00000010;
-
   /** Message mode: alert. */
   public static final byte ALERT = (byte) 0b00000100;
-
   /** Message mode: error. */
   public static final byte ERROR = (byte) 0b00001000;
-
   /** Message mode: input. This mode is a subset of {@link #PROMPT}. */
   public static final byte INPUT = (byte) 0b00010001;
-
   /** Message mode: debug. */
   public static final byte DEBUG = (byte) 0b10000000;
-
   /** Mode symbol: prompt. */
   public static final char SYMBOL_PROMPT = '?';
-
   /** Mode symbol: information. */
   public static final char SYMBOL_INFO = 'i';
-
   /** Mode symbol: alert. */
   public static final char SYMBOL_ALERT = '!';
-
   /** Mode symbol: error. */
   public static final char SYMBOL_ERROR = 'X';
-
   /** Mode symbol: input. */
   public static final char SYMBOL_INPUT = '_';
-
   /** Mode symbol: debug. */
   public static final char SYMBOL_DEBUG = '$';
-
   /** Unfiltered filter bit pattern. */
   public static final int UNFILTERED = 255;
-
   /** Message mode: unused bits. */
   protected static final byte UNUSED = (byte) 0b01100000;
 
   /** Returns the first symbol of the given message mode. */
   public static char getSymbol(byte mode) {
     char out = NUL_CHAR;
-    if (patternIntersectsMode(mode, PROMPT))
+    if (patternIntersectsMode(mode, PROMPT)) {
       out = ((mode & INPUT) != PROMPT) ? SYMBOL_INPUT : SYMBOL_PROMPT;
-    else if (patternIntersectsMode(mode, INFO))
+    } else if (patternIntersectsMode(mode, INFO)) {
       out = SYMBOL_INFO;
-    else if (patternIntersectsMode(mode, ALERT))
+    } else if (patternIntersectsMode(mode, ALERT)) {
       out = SYMBOL_ALERT;
-    else if (patternIntersectsMode(mode, ERROR))
+    } else if (patternIntersectsMode(mode, ERROR)) {
       out = SYMBOL_ERROR;
-    else if (patternIntersectsMode(mode, DEBUG))
+    } else if (patternIntersectsMode(mode, DEBUG)) {
       out = SYMBOL_DEBUG;
+    }
     return out;
   }
 
@@ -123,19 +111,14 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** PrintStream to which messages are to be printed. */
   protected final PrintStream stream;
-
   /** Identifier. */
   protected final String name;
-
   /** Filter bit pattern. */
   protected final byte filter;
-
   /** Exception defining its death. */
   protected Exception deathCause;
-
   /** Current message mode. To be used in conjunction with `inline`. */
   protected byte mode;
-
   /**
    * Indicates whether the next print will be inline. This is set to true after
    * a `print`, and held until the next print is either of a different mode, or
@@ -152,7 +135,7 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** Makes an unfiltered instance with the given name and PrintStream. */
   public Modal(String name, PrintStream stream)
-      throws IllegalArgumentException {
+    throws IllegalArgumentException {
     this(name, stream, UNFILTERED);
   }
 
@@ -258,16 +241,18 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** Prints the given message as the given message mode. */
   public void print(String message, int mode) {
-    if (isObjectDead())
+    if (isObjectDead()) {
       return;
+    }
     byte modeByte = toByte(mode);
-    if (isModeFiltered(modeByte))
+    if (isModeFiltered(modeByte)) {
       return;
+    }
     char symbol = validateAndGetSymbol(modeByte);
     this.inline = modeByte == this.mode;
-    if (this.inline)
+    if (this.inline) {
       getPrintStream().print(message);
-    else {
+    } else {
       getPrintStream().print("[" + getName() + "/" + symbol + "] " + message);
       this.mode = modeByte;
     }
@@ -348,17 +333,20 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
    * separator.
    */
   public void println(String message, int mode) {
-    if (isObjectDead())
+    if (isObjectDead()) {
       return;
+    }
     byte pattern = toByte(mode);
-    if (isModeFiltered(pattern))
+    if (isModeFiltered(pattern)) {
       return;
+    }
     char symbol = validateAndGetSymbol(pattern);
     this.inline = false;
-    if (pattern == this.mode)
+    if (pattern == this.mode) {
       getPrintStream().println(message);
-    else
+    } else {
       getPrintStream().println("[" + getName() + "/" + symbol + "] " + message);
+    }
     this.mode = NUL_BYTE;
   }
 
@@ -392,8 +380,9 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.mode = NUL_BYTE;
     this.inline = false;
     die(NullifiedObjectException.nul);
@@ -430,13 +419,20 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
    */
   @Override
   public Modal append(CharSequence charSequence, int start, int end) {
-    if (charSequence == null)
+    if (charSequence == null) {
       print("null");
-    else {
-      if (start < 0 || end < 0 || start > end || end > charSequence.length())
+    } else {
+      if (start < 0 || end < 0 || start > end || end > charSequence.length()) {
         throw new IndexOutOfBoundsException(
-            "[start, end]: [" + start + ", " + end
-            + "] > [0, " + charSequence.length() + "]");
+          "[start, end]: [" +
+          start +
+          ", " +
+          end +
+          "] > [0, " +
+          charSequence.length() +
+          "]"
+        );
+      }
       print(charSequence.subSequence(start, end).toString());
     }
     return this;
@@ -450,8 +446,9 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
    */
   @Override
   public void close() {
-    if (isObjectDead())
+    if (isObjectDead()) {
       return;
+    }
     if (getPrintStream() != STDOUT && getPrintStream() != STDERR) {
       getPrintStream().close();
       die(new IOException("Stream closed."));
@@ -460,12 +457,15 @@ public class Modal implements Appendable, Closeable, Dieable, Nullifiable {
 
   /** Validates the given message mode and returns its associated symbol. */
   protected char validateAndGetSymbol(byte mode) {
-    if (patternHasUnusedBits(mode))
+    if (patternHasUnusedBits(mode)) {
       throw new IllegalArgumentException(
-          "isModeUnused: " + Integer.toString(filter & UNUSED, 2));
+        "isModeUnused: " + Integer.toString(filter & UNUSED, 2)
+      );
+    }
     char out = getSymbol(mode);
-    if (out == NUL_CHAR)
+    if (out == NUL_CHAR) {
       throw new FatalException(getClass().getName() + "#" + getName());
+    }
     return out;
   }
 

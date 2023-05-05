@@ -8,12 +8,11 @@ package eden.common.excep.media;
 public class BadMediaTypeFacetException extends BadMediaTypeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The media type facet name contains dot characters (.).";
-
+  protected static final String PROBLEM =
+    "The media type facet name contains dot characters (.).";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Erase all dot characters from the facet name.";
+  protected static final String REMEDY =
+    "Erase all dot characters from the facet name.";
 
   /** Makes an instance with the given media type label. */
   public BadMediaTypeFacetException(String mediaType) {
@@ -21,6 +20,5 @@ public class BadMediaTypeFacetException extends BadMediaTypeException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected BadMediaTypeFacetException() {
-  }
+  protected BadMediaTypeFacetException() {}
 }

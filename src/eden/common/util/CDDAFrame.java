@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Consists of utility methods and constants for operating on CDDA (Compact Disc
- * Digital Audio) frames.
+ * Utility methods and constants for operating on CDDA (Compact Disc Digital
+ * Audio) frames.
  *
  * @author Brendon
  */
@@ -16,16 +16,15 @@ public class CDDAFrame {
 
   /** Number of frames per second. */
   public static final int FPS = 75;
-
   /** Number of frames per minute. */
   public static final int FPM = FPS * 60;
-
   /** Initialization use only. */
   private static final List<Float> spf = new ArrayList<>(FPS);
 
   static {
-    for (int i = 0; i < FPS; i++)
+    for (int i = 0; i < FPS; i++) {
       spf.add((float) i / FPS);
+    }
   }
 
   /** Seconds per frame(s). */
@@ -34,12 +33,15 @@ public class CDDAFrame {
   /** Parses the given MM:SS:FF time code to a frame number. */
   public static int parse(String timeCode) {
     Objects.requireNonNull(timeCode, "timeCode");
-    if (timeCode.length() != 8)
+    if (timeCode.length() != 8) {
       throw new StringMisformatException("timeCode", "MM:SS:FF");
+    }
     try {
-      return Integer.parseInt(timeCode.substring(6, 8))
-          + (FPS * Integer.parseInt(timeCode.substring(3, 5)))
-          + (FPM * Integer.parseInt(timeCode.substring(0, 2)));
+      return (
+        Integer.parseInt(timeCode.substring(6, 8)) +
+        (FPS * Integer.parseInt(timeCode.substring(3, 5))) +
+        (FPM * Integer.parseInt(timeCode.substring(0, 2)))
+      );
     } catch (NumberFormatException exception) {
       throw new StringMisformatException("timeCode", "MM:SS:FF");
     }
@@ -63,14 +65,14 @@ public class CDDAFrame {
     StringBuilder out = new StringBuilder(8);
     for (int i = 0;;) {
       out.append(Numbers.toString2Digits(fields[i]));
-      if (++i == fields.length)
+      if (++i == fields.length) {
         break;
+      }
       out.append(":");
     }
     return out.toString();
   }
 
   /** To prevent instantiations of this class. */
-  protected CDDAFrame() {
-  }
+  protected CDDAFrame() {}
 }

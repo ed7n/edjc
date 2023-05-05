@@ -8,12 +8,9 @@ package eden.common.excep.cd;
 public class IndexUnexpectedException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeUnexpectedProblem("index");
-
+  protected static final String PROBLEM = makeUnexpectedProblem("index");
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct its placement or number.";
+  protected static final String REMEDY = "Correct its placement or number.";
 
   /** Makes an instance with the given track and index numbers. */
   public IndexUnexpectedException(int track, int index) {
@@ -36,6 +33,5 @@ public class IndexUnexpectedException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected IndexUnexpectedException() {
-  }
+  protected IndexUnexpectedException() {}
 }

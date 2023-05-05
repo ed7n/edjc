@@ -8,7 +8,6 @@ package eden.common.model.cd;
  * @see eden.common.model.cd.CDLayoutObject
  */
 public interface CDTextable {
-
   /** Returns its PERFORMER argument. */
   public String getPerformer();
 

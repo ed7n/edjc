@@ -10,12 +10,12 @@ import eden.common.excep.EDENExceptions;
 public class MediaTypeMisformatException extends BadMediaTypeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisformatProblem("media type");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisformatProblem(
+    "media type"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "See template: type/facet.exempli.gratia.subtype+syntax;parameter";
+  protected static final String REMEDY =
+    "See template: type/facet.exempli.gratia.subtype+syntax;parameter";
 
   /** Makes an instance with the given media type label. */
   public MediaTypeMisformatException(String mediaType) {
@@ -23,6 +23,5 @@ public class MediaTypeMisformatException extends BadMediaTypeException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected MediaTypeMisformatException() {
-  }
+  protected MediaTypeMisformatException() {}
 }

@@ -10,12 +10,11 @@ import eden.common.model.cd.CDLayoutObject;
 public class PregapAgainException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeAgainProblem(CDLayoutObject.PREGAP);
-
+  protected static final String PROBLEM = makeAgainProblem(
+    CDLayoutObject.PREGAP
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeAgainRemedy(CDLayoutObject.PREGAP);
+  protected static final String REMEDY = makeAgainRemedy(CDLayoutObject.PREGAP);
 
   /** Makes an instance with the given track and line numbers. */
   public PregapAgainException(int track, long line) {
@@ -28,6 +27,5 @@ public class PregapAgainException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected PregapAgainException() {
-  }
+  protected PregapAgainException() {}
 }

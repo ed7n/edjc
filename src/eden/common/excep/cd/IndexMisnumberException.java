@@ -11,13 +11,15 @@ import eden.common.model.cd.Index;
 public class IndexMisnumberException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisnumberProblem("index");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisnumberProblem(
+    "index"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeMisnumberRemedy(
-          "the index number", Index.MIN_NUMBER, Index.MAX_NUMBER);
+  protected static final String REMEDY = makeMisnumberRemedy(
+    "the index number",
+    Index.MIN_NUMBER,
+    Index.MAX_NUMBER
+  );
 
   /** Makes an instance with the given track and index numbers. */
   public IndexMisnumberException(int track, int index) {
@@ -35,6 +37,5 @@ public class IndexMisnumberException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected IndexMisnumberException() {
-  }
+  protected IndexMisnumberException() {}
 }

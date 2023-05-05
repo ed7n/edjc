@@ -8,12 +8,12 @@ package eden.common.excep.cd;
 public class FrameUnexpectedException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeUnexpectedProblem("frame number or time code");
-
+  protected static final String PROBLEM = makeUnexpectedProblem(
+    "frame number or time code"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct it to follow after that of the previous index.";
+  protected static final String REMEDY =
+    "Correct it to follow after that of the previous index.";
 
   /** Makes an instance with the given track and index numbers. */
   public FrameUnexpectedException(int track, int index) {
@@ -26,6 +26,5 @@ public class FrameUnexpectedException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FrameUnexpectedException() {
-  }
+  protected FrameUnexpectedException() {}
 }

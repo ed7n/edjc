@@ -12,15 +12,15 @@ import eden.common.excep.NullifiedObjectUseException;
  * @author Brendon
  */
 public interface Nullifiable {
-
   /**
    * Ensures that it is not nullified.
    *
    * @throws NullifiedObjectUseException If it is nullified.
    */
   default Nullifiable requireNonNullified() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       throw new NullifiedObjectUseException(toString());
+    }
     return this;
   }
 
@@ -29,7 +29,6 @@ public interface Nullifiable {
    * by zeroing all its mutable fields.
    */
   void nullifyObject();
-
   /** Returns whether it is nullified. */
   boolean isObjectNullified();
 }

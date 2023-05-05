@@ -20,26 +20,26 @@ public class MediaType {
 
   /** restricted-name-first. */
   protected static final String REGEX_NAME_FIRST = "[\\p{Alnum}]";
-
   /** restricted-name-chars. */
   protected static final String REGEX_NAME_CHARS = "[\\p{Alnum}!#$&-^_]";
-
   /** Facet name. */
   protected static final String REGEX_FACET = "(" + REGEX_NAME_CHARS + "\\.)";
-
   /** Structured syntax suffix. */
   protected static final String REGEX_SYNTAX = "(\\+" + REGEX_NAME_CHARS + ")";
-
   /** Validity regular expression, except for string length. */
-  protected static final Pattern REGEX_NAME = Pattern.compile("^" + REGEX_FACET
-      + "{0,}" + REGEX_NAME_FIRST + REGEX_NAME_CHARS + REGEX_SYNTAX + "?$");
-
+  protected static final Pattern REGEX_NAME = Pattern.compile(
+    "^" +
+    REGEX_FACET +
+    "{0,}" +
+    REGEX_NAME_FIRST +
+    REGEX_NAME_CHARS +
+    REGEX_SYNTAX +
+    "?$"
+  );
   /** Maximum string length. */
   protected static final int MAX_NAME_LENGTH = 127;
-
   /** type-name. */
   protected final MediaTypeType type;
-
   /** String parameters and its string form. */
   protected final String facet, subtype, syntax, parameter, string;
 
@@ -58,13 +58,22 @@ public class MediaType {
    * syntax suffix.
    */
   public MediaType(
-      MediaTypeType type, String facet, String subtype, String syntax) {
+    MediaTypeType type,
+    String facet,
+    String subtype,
+    String syntax
+  ) {
     this(type, facet, subtype, syntax, null);
   }
 
   /** Makes an instance with the given parameters. */
-  public MediaType(MediaTypeType type, String facet,
-      String subtype, String syntax, String parameter) {
+  public MediaType(
+    MediaTypeType type,
+    String facet,
+    String subtype,
+    String syntax,
+    String parameter
+  ) {
     this.type = Objects.requireNonNull(type, "type");
     this.subtype = Strings.requireNonEmpty(subtype, "subtype").trim();
     this.facet = Strings.nullOrTrim(facet);
@@ -75,16 +84,22 @@ public class MediaType {
 
   /** Throws the relevant exception for a invalidity within itself. */
   public void checkValidity() {
-    if (toString().length() > MAX_NAME_LENGTH)
+    if (toString().length() > MAX_NAME_LENGTH) {
       throw new StringOverflowException(
-          Integer.toString(hashCode()), MAX_NAME_LENGTH);
-    if (!REGEX_NAME.matcher(toString()).matches())
+        Integer.toString(hashCode()),
+        MAX_NAME_LENGTH
+      );
+    }
+    if (!REGEX_NAME.matcher(toString()).matches()) {
       throw new MediaTypeMisformatException(Integer.toString(hashCode()));
+    }
     if (hasFacet()) {
-      if (getFacet().contains("."))
+      if (getFacet().contains(".")) {
         throw new BadMediaTypeFacetException(Integer.toString(hashCode()));
-    } else if (getSubtype().contains("."))
+      }
+    } else if (getSubtype().contains(".")) {
       throw new BadMediaTypeSubtypeException(Integer.toString(hashCode()));
+    }
   }
 
   /** Return its type name. */
@@ -140,8 +155,14 @@ public class MediaType {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((MediaType) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((MediaType) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */
@@ -152,8 +173,14 @@ public class MediaType {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return Objects.hash(this.facet,
-        this.parameter, this.string, this.subtype, this.syntax, this.type);
+    return Objects.hash(
+      this.facet,
+      this.parameter,
+      this.string,
+      this.subtype,
+      this.syntax,
+      this.type
+    );
   }
 
   /** {@inheritDoc} */
@@ -166,13 +193,16 @@ public class MediaType {
   protected String makeString() {
     StringBuilder out = new StringBuilder(MAX_NAME_LENGTH);
     out.append(getType().toString()).append("/");
-    if (hasFacet())
+    if (hasFacet()) {
       out.append(getFacet()).append(".");
+    }
     out.append(getSubtype());
-    if (hasSyntax())
+    if (hasSyntax()) {
       out.append("+").append(getSyntax());
-    if (hasParameter())
+    }
+    if (hasParameter()) {
       out.append(";").append(getParameter());
+    }
     return out.toString();
   }
 }

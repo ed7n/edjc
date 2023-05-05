@@ -1,7 +1,7 @@
 package eden.common.object;
 
 /**
- * Consists of utility methods for operating on API objects.
+ * Utility methods for operating on API objects.
  *
  * @author Brendon
  */
@@ -26,6 +26,5 @@ public class EDENObjects {
   }
 
   /** To prevent instantiations of this class. */
-  protected EDENObjects() {
-  }
+  protected EDENObjects() {}
 }

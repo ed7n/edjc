@@ -9,8 +9,8 @@ package eden.common.excep;
 public class DeadObjectUseException extends EDENRuntimeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "Internal Error: The dead object was used.";
+  protected static final String PROBLEM =
+    "Internal Error: The dead object was used.";
 
   /** Makes a null instance. */
   public DeadObjectUseException() {

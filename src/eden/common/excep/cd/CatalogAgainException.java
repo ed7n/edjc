@@ -11,12 +11,13 @@ import eden.common.model.cd.CDLayoutObject;
 public class CatalogAgainException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeAgainProblem(CDLayoutObject.CATALOG);
-
+  protected static final String PROBLEM = makeAgainProblem(
+    CDLayoutObject.CATALOG
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeAgainRemedy(CDLayoutObject.CATALOG);
+  protected static final String REMEDY = makeAgainRemedy(
+    CDLayoutObject.CATALOG
+  );
 
   /** Makes an instance with the given line number. */
   public CatalogAgainException(long line) {
@@ -29,6 +30,5 @@ public class CatalogAgainException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected CatalogAgainException() {
-  }
+  protected CatalogAgainException() {}
 }

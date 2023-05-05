@@ -11,13 +11,15 @@ import eden.common.model.cd.Track;
 public class TrackMisnumberException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisnumberProblem("track");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisnumberProblem(
+    "track"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeMisnumberRemedy(
-          "the track number", Track.MIN_NUMBER, Track.MAX_NUMBER);
+  protected static final String REMEDY = makeMisnumberRemedy(
+    "the track number",
+    Track.MIN_NUMBER,
+    Track.MAX_NUMBER
+  );
 
   /** Makes an instance with the given track number. */
   public TrackMisnumberException(int track) {
@@ -35,6 +37,5 @@ public class TrackMisnumberException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected TrackMisnumberException() {
-  }
+  protected TrackMisnumberException() {}
 }

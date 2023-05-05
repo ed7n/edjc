@@ -9,13 +9,10 @@ package eden.common.object;
  * @author Brendon
  */
 public interface Revivable {
-
   /** Corrects itself from abnormalities and returns its success. */
   boolean reviveObject();
-
   /** Returns the number of successful revives. */
   int getObjectReviveCount();
-
   /** Returns whether it is possible to revive. */
   boolean isObjectRevivable();
 }

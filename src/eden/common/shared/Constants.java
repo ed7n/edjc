@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 /**
- * Consists of constants used in the API.
+ * Shared independent constants.
  *
  * @author Brendon
  */
@@ -28,6 +28,5 @@ public final class Constants {
   public static final byte NUL_BYTE = Byte.MIN_VALUE;
 
   /** To prevent instantiations of this class. */
-  private Constants() {
-  }
+  private Constants() {}
 }

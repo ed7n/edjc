@@ -22,7 +22,6 @@ public class CueSheet implements Nullifiable {
 
   /** Session. */
   protected Session session;
-
   /** Text file. */
   protected PlainText file;
 
@@ -75,8 +74,9 @@ public class CueSheet implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.file = null;
     this.session = null;
   }
@@ -90,8 +90,14 @@ public class CueSheet implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((CueSheet) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((CueSheet) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */
@@ -111,12 +117,14 @@ public class CueSheet implements Nullifiable {
     StringBuilder out = new StringBuilder(STRING_CAPACITY);
     if (hasFile()) {
       out.append(getFile().toString()).append(":").append(EOL);
-      if (getFile().hasLineEnding())
+      if (getFile().hasLineEnding()) {
         out.append(getSession().toString(getFile().getLineEnding()));
-      else
+      } else {
         out.append(getSession().toString());
-    } else
+      }
+    } else {
       out.append(getSession().toString());
+    }
     return out.toString();
   }
 }

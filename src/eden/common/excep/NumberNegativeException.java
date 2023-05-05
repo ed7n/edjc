@@ -8,8 +8,7 @@ package eden.common.excep;
 public class NumberNegativeException extends EDENRuntimeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The number is negative.";
+  protected static final String PROBLEM = "The number is negative.";
 
   /** Makes an instance with the given byte. */
   public NumberNegativeException(byte number) {
@@ -47,6 +46,5 @@ public class NumberNegativeException extends EDENRuntimeException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected NumberNegativeException() {
-  }
+  protected NumberNegativeException() {}
 }

@@ -10,13 +10,13 @@ import eden.common.model.cd.CDLayoutObject;
 public class FileIncompleteException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The `" + CDLayoutObject.FILE + "` statement is incorrect.";
-
+  protected static final String PROBLEM =
+    "The `" + CDLayoutObject.FILE + "` statement is incorrect.";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct the `" + CDLayoutObject.FILE
-      + "` statement to have the path and type.";
+  protected static final String REMEDY =
+    "Correct the `" +
+    CDLayoutObject.FILE +
+    "` statement to have the path and type.";
 
   /** Makes an instance with the given track and index numbers. */
   public FileIncompleteException(int track, int index) {
@@ -34,6 +34,5 @@ public class FileIncompleteException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FileIncompleteException() {
-  }
+  protected FileIncompleteException() {}
 }

@@ -10,12 +10,10 @@ import eden.common.model.cd.Index;
 public class TrackOverflowException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The track has too many indexes.";
-
+  protected static final String PROBLEM = "The track has too many indexes.";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Erase excess indexes until at most " + Index.MAX_COUNT + " remain.";
+  protected static final String REMEDY =
+    "Erase excess indexes until at most " + Index.MAX_COUNT + " remain.";
 
   /** Makes an instance with the given track number. */
   public TrackOverflowException(int track) {
@@ -33,6 +31,5 @@ public class TrackOverflowException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected TrackOverflowException() {
-  }
+  protected TrackOverflowException() {}
 }

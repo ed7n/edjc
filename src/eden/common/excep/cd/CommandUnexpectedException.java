@@ -8,8 +8,8 @@ package eden.common.excep.cd;
 public class CommandUnexpectedException extends BadCueSheetException {
 
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Consult the website for command restrictions.";
+  protected static final String REMEDY =
+    "Consult the website for command restrictions.";
 
   /** Makes an instance with the given line number and command label. */
   public CommandUnexpectedException(long line, String command) {
@@ -17,6 +17,5 @@ public class CommandUnexpectedException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected CommandUnexpectedException() {
-  }
+  protected CommandUnexpectedException() {}
 }

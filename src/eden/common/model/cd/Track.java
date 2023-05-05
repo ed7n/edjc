@@ -20,13 +20,10 @@ public class Track extends CDLayoutObject implements CDTextable {
 
   /** Null instance. */
   public static final Track nul = new Track(NUL_INT);
-
   /** Maximum track number in a CD. */
   public static final int MAX_NUMBER = 99;
-
   /** Minimum track number in a CD. */
   public static final int MIN_NUMBER = 1;
-
   /** Maximum number of tracks in a CD. */
   public static final int MAX_COUNT = MAX_NUMBER - MIN_NUMBER + 1;
 
@@ -37,51 +34,70 @@ public class Track extends CDLayoutObject implements CDTextable {
 
   /** Indexes. */
   protected List<Index> indexes;
-
   /** Flags. */
   protected List<String> flags;
-
   /** International Standard Recording Code (ISRC). */
   protected String isrc;
-
   /** Performer. */
   protected String performer;
-
   /** Songwriter. */
   protected String songwriter;
-
   /** Title. */
   protected String title;
-
   /** Type. */
   protected String type;
-
   /** Number. */
   protected int number;
-
   /** Postgap. */
   protected int postgap = NUL_INT;
-
   /** Pregap. */
   protected int pregap = NUL_INT;
 
   /** Makes an instance with the given track number. */
   public Track(int number) {
-    this(number, 1, NUL_INT, NUL_INT,
-        new LinkedList<>(), null, null, null, null, null);
+    this(
+      number,
+      1,
+      NUL_INT,
+      NUL_INT,
+      new LinkedList<>(),
+      null,
+      null,
+      null,
+      null,
+      null
+    );
   }
 
   /** Makes an instance with the given track number and type. */
   public Track(int number, String type) {
-    this(number, 1, NUL_INT, NUL_INT,
-        new LinkedList<>(), null, null, null, null, type);
+    this(
+      number,
+      1,
+      NUL_INT,
+      NUL_INT,
+      new LinkedList<>(),
+      null,
+      null,
+      null,
+      null,
+      type
+    );
   }
 
   /** Makes an instance with the given arguments. */
   public Track(
-      int number, int indexCount, int postgap, int pregap,
-      List<String> flags, String isrc, String performer,
-      String songwriter, String title, String type) {
+    int number,
+    int indexCount,
+    int postgap,
+    int pregap,
+    List<String> flags,
+    String isrc,
+    String performer,
+    String songwriter,
+    String title,
+    String type
+  ) {
     super();
     Numbers.requireNonNegative(indexCount);
     this.custom = new HashMap<>(5);
@@ -98,8 +114,7 @@ public class Track extends CDLayoutObject implements CDTextable {
   }
 
   /** To prevent null instantiations of this class. */
-  protected Track() {
-  }
+  protected Track() {}
 
   /** Returns its list of indexes. */
   public List<Index> getIndexes() {
@@ -286,7 +301,7 @@ public class Track extends CDLayoutObject implements CDTextable {
 
   /** Returns whether it has indexes. */
   public boolean hasIndexes() {
-    return getIndexes().size() > 0;
+    return !getIndexes().isEmpty();
   }
 
   /** Returns whether its ISRC argument is set. */
@@ -332,56 +347,93 @@ public class Track extends CDLayoutObject implements CDTextable {
   @Override
   public List<CueSheetStatement> toStatements() {
     List<CueSheetStatement> out = new LinkedList<>();
-    if (hasIndexes() && getIndex(0).hasFilePath())
-      out.add(new CueSheetStatement(
+    if (hasIndexes() && getIndex(0).hasFilePath()) {
+      out.add(
+        new CueSheetStatement(
           FILE,
           CueSheets.ensureQuote(getIndex(0).getFilePath()),
-          getIndex(0).getFileType()));
-    out.add(new CueSheetStatement(
-        INDENT + TRACK, Numbers.toString2Digits(getNumber()), getType()));
-    if (hasFlags())
-      out.add(new CueSheetStatement(
-          INDENT_FLAGS, String.join(" ", getFlags())));
+          getIndex(0).getFileType()
+        )
+      );
+    }
+    out.add(
+      new CueSheetStatement(
+        INDENT + TRACK,
+        Numbers.toString2Digits(getNumber()),
+        getType()
+      )
+    );
+    if (hasFlags()) {
+      out.add(
+        new CueSheetStatement(INDENT_FLAGS, String.join(" ", getFlags()))
+      );
+    }
     getRems().forEach(rem -> out.add(new CueSheetStatement(INDENT_2_REM, rem)));
-    if (hasIsrc())
+    if (hasIsrc()) {
       out.add(new CueSheetStatement(INDENT_ISRC, getIsrc()));
-    if (hasTitle())
-      out.add(new CueSheetStatement(
-          INDENT_TITLE, CueSheets.ensureQuote(getTitle())));
-    if (hasPerformer())
-      out.add(new CueSheetStatement(
-          INDENT_PERFORMER, CueSheets.ensureQuote(getPerformer())));
-    if (hasSongwriter())
-      out.add(new CueSheetStatement(
-          INDENT_SONGWRITER, CueSheets.ensureQuote(getSongwriter())));
+    }
+    if (hasTitle()) {
+      out.add(
+        new CueSheetStatement(INDENT_TITLE, CueSheets.ensureQuote(getTitle()))
+      );
+    }
+    if (hasPerformer()) {
+      out.add(
+        new CueSheetStatement(
+          INDENT_PERFORMER,
+          CueSheets.ensureQuote(getPerformer())
+        )
+      );
+    }
+    if (hasSongwriter()) {
+      out.add(
+        new CueSheetStatement(
+          INDENT_SONGWRITER,
+          CueSheets.ensureQuote(getSongwriter())
+        )
+      );
+    }
     forEachCustom((command, argument) -> {
       out.add(new CueSheetStatement(command, argument));
       return argument;
     });
-    if (hasPregap())
-      out.add(new CueSheetStatement(
-          INDENT_PREGAP, CDDAFrame.toTimeCode(getPregap())));
-    if (hasIndexes())
+    if (hasPregap()) {
+      out.add(
+        new CueSheetStatement(INDENT_PREGAP, CDDAFrame.toTimeCode(getPregap()))
+      );
+    }
+    if (hasIndexes()) {
       out.addAll(getIndex(0).toStatements());
+    }
     for (int i = 1; i < getIndexes().size(); i++) {
-      if (getIndex(i).hasFilePath())
-        out.add(new CueSheetStatement(
+      if (getIndex(i).hasFilePath()) {
+        out.add(
+          new CueSheetStatement(
             FILE,
             CueSheets.ensureQuote(getIndex(i).getFilePath()),
-            getIndex(i).getFileType()));
+            getIndex(i).getFileType()
+          )
+        );
+      }
       out.addAll(getIndex(i).toStatements());
     }
-    if (hasPostgap())
-      out.add(new CueSheetStatement(
-          INDENT_POSTGAP, CDDAFrame.toTimeCode(getPostgap())));
+    if (hasPostgap()) {
+      out.add(
+        new CueSheetStatement(
+          INDENT_POSTGAP,
+          CDDAFrame.toTimeCode(getPostgap())
+        )
+      );
+    }
     return out;
   }
 
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.indexes.clear();
     this.indexes = null;
     this.number = NUL_INT;
@@ -393,8 +445,14 @@ public class Track extends CDLayoutObject implements CDTextable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((Track) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((Track) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */
@@ -405,7 +463,14 @@ public class Track extends CDLayoutObject implements CDTextable {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return Objects.hash(this.custom, this.indexes,
-        this.number, this.postgap, this.pregap, this.remarks, this.type);
+    return Objects.hash(
+      this.custom,
+      this.indexes,
+      this.number,
+      this.postgap,
+      this.pregap,
+      this.remarks,
+      this.type
+    );
   }
 }

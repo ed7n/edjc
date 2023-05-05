@@ -11,12 +11,11 @@ import eden.common.model.cd.CDLayoutObject;
 public class FlagsAgainException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeAgainProblem(CDLayoutObject.FLAGS);
-
+  protected static final String PROBLEM = makeAgainProblem(
+    CDLayoutObject.FLAGS
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeAgainRemedy(CDLayoutObject.FLAGS);
+  protected static final String REMEDY = makeAgainRemedy(CDLayoutObject.FLAGS);
 
   /** Makes an instance with the given track and line number. */
   public FlagsAgainException(int track, long line) {
@@ -29,6 +28,5 @@ public class FlagsAgainException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FlagsAgainException() {
-  }
+  protected FlagsAgainException() {}
 }

@@ -10,12 +10,12 @@ import eden.common.excep.EDENExceptions;
 public class MCNMisformatException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisformatProblem("Media Catalog Number (MCN)");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisformatProblem(
+    "Media Catalog Number (MCN)"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct the MCN to have thirteen alphanumeric characters.";
+  protected static final String REMEDY =
+    "Correct the MCN to have thirteen alphanumeric characters.";
 
   /** Makes an instance with the given line number. */
   public MCNMisformatException(long line) {
@@ -28,6 +28,5 @@ public class MCNMisformatException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected MCNMisformatException() {
-  }
+  protected MCNMisformatException() {}
 }

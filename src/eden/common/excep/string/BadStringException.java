@@ -20,6 +20,5 @@ public class BadStringException extends EDENRuntimeException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected BadStringException() {
-  }
+  protected BadStringException() {}
 }

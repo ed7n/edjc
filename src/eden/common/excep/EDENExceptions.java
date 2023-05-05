@@ -1,7 +1,7 @@
 package eden.common.excep;
 
 /**
- * Consists of utility methods for operating on EDENExceptions.
+ * Utility methods for operating on EDENExceptions.
  *
  * @author Brendon
  */

@@ -10,12 +10,10 @@ package eden.common.excep;
 public class NullifiedObjectException extends EDENRuntimeException {
 
   /** Null instance. */
-  public static final NullifiedObjectException nul
-      = new NullifiedObjectException();
-
+  public static final NullifiedObjectException nul =
+    new NullifiedObjectException();
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The object is nullified.";
+  protected static final String PROBLEM = "The object is nullified.";
 
   /** Makes an instance with the given object label. */
   public NullifiedObjectException(String object) {

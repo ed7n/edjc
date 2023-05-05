@@ -39,47 +39,34 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** Reader to parse from. */
   protected Reader reader;
-
   /** Resulting cuesheet. */
   protected CueSheet sheet;
-
   /** Working track. */
   protected Track track;
-
   /** Working index. */
   protected Index index;
-
   /** Operation mode. */
   protected Mode mode = Mode.SESSION;
-
   /** Exception defining its death. */
   protected Exception deathCause;
-
   /** Character buffer. */
-  protected StringBuilder builder
-      = new StringBuilder(CueSheetStatement.LINE_WIDTH);
-
+  protected StringBuilder builder = new StringBuilder(
+    CueSheetStatement.LINE_WIDTH
+  );
   /** FILE argument accumulators. */
   protected String filePath, fileType;
-
   /** String accumulator. */
   protected String string;
-
   /** Integer accumulators. */
   protected int[] acc = new int[2];
-
   /** Line count. */
   protected long lineCount = 1;
-
   /** Whether its reader has reached the end-of-file. */
   protected boolean eof = false;
-
   /** Whether its reader is at an end-of-line. */
   protected boolean eol = false;
-
   /** Whether its reader is at an end-of-word. */
   protected boolean eow = false;
-
   /** Whether it is bypassing word detection. */
   protected boolean esc = false;
 
@@ -102,49 +89,56 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** Parses a cuesheet from its reader into itself, then returns it. */
   public CueSheet parse() {
-    if (isObjectDead())
+    if (isObjectDead()) {
       return null;
-    if (isEof())
+    }
+    if (isEof()) {
       return getSheet();
+    }
     try {
       parseLineEnding();
-      if (Strings.isNullOrEmpty(readWord()))
+      if (Strings.isNullOrEmpty(readWord())) {
         return getSheet();
+      }
       if (getString().charAt(0) == BOM) {
         getBuilder().deleteCharAt(0);
         setStringToBuilder();
       }
-      do
-        if (getString().isEmpty()) {
-        } else if (getString().equalsIgnoreCase(CDLayoutObject.CATALOG))
+      do {
+        if (getString().isEmpty()) {} else if (
+          getString().equalsIgnoreCase(CDLayoutObject.CATALOG)
+        ) {
           parseCatalog();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.CDTEXTFILE))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.CDTEXTFILE)) {
           parseCdTextFile();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.FILE))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.FILE)) {
           parseFile();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.FLAGS))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.FLAGS)) {
           parseFlags();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.INDEX))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.INDEX)) {
           parseIndex();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.ISRC))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.ISRC)) {
           parseIsrc();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.PERFORMER))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.PERFORMER)) {
           parsePerformer();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.POSTGAP))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.POSTGAP)) {
           parsePostgap();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.PREGAP))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.PREGAP)) {
           parsePregap();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.REM))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.REM)) {
           parseRem();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.SONGWRITER))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.SONGWRITER)) {
           parseSongwriter();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.TITLE))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.TITLE)) {
           parseTitle();
-        else if (getString().equalsIgnoreCase(CDLayoutObject.TRACK))
+        } else if (getString().equalsIgnoreCase(CDLayoutObject.TRACK)) {
           parseTrack();
-        else
+        } else {
           parseCustom();
-      while (readWord() != null);
+        }
+      } while (readWord() != null);
+    } catch (IOException exception) {
+      die(exception);
     } catch (Exception exception) {
       die(exception);
     }
@@ -166,8 +160,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     Arrays.fill(this.acc, NUL_INT);
     clearBuilder();
     this.acc = null;
@@ -197,8 +192,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void close() {
-    if (isObjectDead())
+    if (isObjectDead()) {
       return;
+    }
     try {
       getReader().close();
     } catch (IOException exception) {
@@ -209,8 +205,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** {@link #parse()} branch: CATALOG. */
   protected void parseCatalog() throws IOException {
-    if (getSession().hasCatalog())
+    if (getSession().hasCatalog()) {
       throw new CatalogAgainException(getLineCount());
+    }
     getSession().setCatalog(readWord());
   }
 
@@ -247,8 +244,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
         throwCommandUnexpectedException();
         break;
       case TRACK:
-        for (String flag : readRestOfLine().split("\\p{Blank}"))
+        for (String flag : readRestOfLine().split("\\p{Blank}")) {
           getTrack().addFlag(flag);
+        }
         break;
     }
   }
@@ -256,7 +254,8 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   /** {@link #parse()} branch: INDEX. */
   protected void parseIndex() throws IOException {
     setIndex(
-        new Index(Integer.parseInt(readWord()), CDDAFrame.parse(readWord())));
+      new Index(Integer.parseInt(readWord()), CDDAFrame.parse(readWord()))
+    );
     if (hasFile()) {
       getIndex().setFile(getFilePath(), getFileType());
       clearFile();
@@ -280,10 +279,11 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** {@link #parse()} branch: line ending. */
   protected void parseLineEnding() throws IOException {
-    if (getSheet().hasFile())
-        try (
-        Reader readerr
-        = Files.newBufferedReader(getSheet().getFile().getFile().toPath())) {
+    if (getSheet().hasFile()) try (
+      Reader readerr = Files.newBufferedReader(
+        getSheet().getFile().getFile().toPath()
+      )
+    ) {
       getSheet().getFile().setLineEnding(LineEnding.parse(readerr));
     }
   }
@@ -379,9 +379,11 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
   protected String processEol() {
     this.eol = true;
     this.eow = true;
-    if (isEsc())
+    if (isEsc()) {
       throw new StringMisquoteException(
-          BadCueSheetException.makeSubject(lineCount));
+        BadCueSheetException.makeSubject(lineCount)
+      );
+    }
     setStringToBuilder();
     return getString();
   }
@@ -412,8 +414,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** Reads and returns the next item from its reader. */
   protected String readItem(boolean word) throws IOException {
-    if (isEof())
+    if (isEof()) {
       return null;
+    }
     clearBuilder();
     while (true) {
       if (isEol()) {
@@ -428,8 +431,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
         case '\t':
         case ' ':
           if (!isEsc()) {
-            if (isEow())
+            if (isEow()) {
               continue;
+            }
             this.eow = true;
             if (word) {
               setStringToBuilder();
@@ -438,8 +442,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
           }
           break;
         case '\n':
-          if (getAcc1() == '\r')
+          if (getAcc1() == '\r') {
             continue;
+          }
         case '\r':
           return processEol();
         case -1:
@@ -601,6 +606,9 @@ public class CueSheetParser implements Closeable, Dieable, Nullifiable {
 
   /** Operating modes. */
   protected enum Mode {
-    EOL, SESSION, TRACK, INDEX;
+    EOL,
+    SESSION,
+    TRACK,
+    INDEX,
   }
 }

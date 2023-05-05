@@ -16,19 +16,14 @@ public class Session extends CDLayoutObject implements CDTextable {
 
   /** Tracks. */
   protected List<Track> tracks;
-
   /** Media Catalog Number (MCN). */
   protected String catalog;
-
   /** CD-TEXT file path. */
   protected String cdTextFile;
-
   /** Performer. */
   protected String performer;
-
   /** Songwriter. */
   protected String songwriter;
-
   /** Title. */
   protected String title;
 
@@ -44,8 +39,13 @@ public class Session extends CDLayoutObject implements CDTextable {
 
   /** Makes an instance with the given arguments. */
   public Session(
-      int trackCount, String catalog, String cdTextFile,
-      String performer, String songwriter, String title) {
+    int trackCount,
+    String catalog,
+    String cdTextFile,
+    String performer,
+    String songwriter,
+    String title
+  ) {
     super();
     Numbers.requireNonNegative(trackCount);
     this.tracks = new ArrayList<>(trackCount);
@@ -192,7 +192,7 @@ public class Session extends CDLayoutObject implements CDTextable {
 
   /** Returns whether it has tracks. */
   public boolean hasTracks() {
-    return getTracks().size() > 0;
+    return !getTracks().isEmpty();
   }
 
   /** {@inheritDoc} */
@@ -224,20 +224,33 @@ public class Session extends CDLayoutObject implements CDTextable {
   public List<CueSheetStatement> toStatements() {
     List<CueSheetStatement> out = new LinkedList<>();
     getRems().forEach(rem -> out.add(new CueSheetStatement(REM, rem)));
-    if (hasCatalog())
+    if (hasCatalog()) {
       out.add(new CueSheetStatement(CATALOG, getCatalog()));
-    if (hasCdTextFile())
-      out.add(new CueSheetStatement(
-          CDTEXTFILE, CueSheets.ensureQuote(getCdTextFile())));
-    if (hasPerformer())
-      out.add(new CueSheetStatement(
-          PERFORMER, CueSheets.ensureQuote(getPerformer())));
-    if (hasSongwriter())
-      out.add(new CueSheetStatement(
-          SONGWRITER, CueSheets.ensureQuote(getSongwriter())));
-    if (hasTitle())
-      out.add(new CueSheetStatement(
-          TITLE, CueSheets.ensureQuote(getTitle())));
+    }
+    if (hasCdTextFile()) {
+      out.add(
+        new CueSheetStatement(
+          CDTEXTFILE,
+          CueSheets.ensureQuote(getCdTextFile())
+        )
+      );
+    }
+    if (hasPerformer()) {
+      out.add(
+        new CueSheetStatement(PERFORMER, CueSheets.ensureQuote(getPerformer()))
+      );
+    }
+    if (hasSongwriter()) {
+      out.add(
+        new CueSheetStatement(
+          SONGWRITER,
+          CueSheets.ensureQuote(getSongwriter())
+        )
+      );
+    }
+    if (hasTitle()) {
+      out.add(new CueSheetStatement(TITLE, CueSheets.ensureQuote(getTitle())));
+    }
     forEachCustom((command, argument) -> {
       out.add(new CueSheetStatement(command, argument));
       return argument;
@@ -249,8 +262,9 @@ public class Session extends CDLayoutObject implements CDTextable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.tracks.clear();
     this.tracks = null;
     super.nullifyObject();
@@ -259,8 +273,14 @@ public class Session extends CDLayoutObject implements CDTextable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((Session) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((Session) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */

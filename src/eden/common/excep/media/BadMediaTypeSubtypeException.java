@@ -9,13 +9,12 @@ package eden.common.excep.media;
 public class BadMediaTypeSubtypeException extends BadMediaTypeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The media type has no facet name but its subtype name contains dot "
-      + "characters (.).";
-
+  protected static final String PROBLEM =
+    "The media type has no facet name but its subtype name contains dot " +
+    "characters (.).";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Erase all dot characters from the subtype name.";
+  protected static final String REMEDY =
+    "Erase all dot characters from the subtype name.";
 
   /** Makes an instance with the given media type label. */
   public BadMediaTypeSubtypeException(String mediaType) {
@@ -23,6 +22,5 @@ public class BadMediaTypeSubtypeException extends BadMediaTypeException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected BadMediaTypeSubtypeException() {
-  }
+  protected BadMediaTypeSubtypeException() {}
 }

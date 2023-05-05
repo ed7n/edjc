@@ -16,7 +16,6 @@ public abstract class MediaFile implements Nullifiable {
 
   /** File. */
   protected File file;
-
   /** Title. */
   protected String title;
 
@@ -71,8 +70,9 @@ public abstract class MediaFile implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.file = null;
     this.title = null;
   }
@@ -86,8 +86,14 @@ public abstract class MediaFile implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((MediaFile) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((MediaFile) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */

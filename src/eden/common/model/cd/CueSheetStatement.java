@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * Consists of a list of argument strings and a method that turns it into a
- * space-delimited string.
+ * A list of argument strings and a method that turns it into a space-delimited
+ * string.
  *
  * @author Brendon
  */
@@ -23,13 +23,13 @@ public class CueSheetStatement implements Nullifiable {
    * Note that FILE and REM statement can be longer than this.
    */
   public static final int LINE_WIDTH = 10 + 80 + 2 + 1;
-
   /** List of arguments. */
   protected Deque<String> arguments;
 
   /** Makes an instance with the given arguments. */
   public CueSheetStatement(String... arguments) {
-    this.arguments = arguments != null
+    this.arguments =
+      arguments != null
         ? new LinkedList<>(Arrays.asList(arguments))
         : new LinkedList<>();
   }
@@ -62,8 +62,9 @@ public class CueSheetStatement implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.arguments.clear();
     this.arguments = null;
   }
@@ -77,9 +78,14 @@ public class CueSheetStatement implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass()
-        && equals((CueSheetStatement) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((CueSheetStatement) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */
@@ -96,17 +102,20 @@ public class CueSheetStatement implements Nullifiable {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    if (!hasArguments())
+    if (!hasArguments()) {
       return NUL_STRING;
+    }
     StringBuilder builder = new StringBuilder(LINE_WIDTH);
     Iterator<String> iterator = getArguments().iterator();
     String argument;
     while (true) {
       argument = iterator.next();
-      if (argument != null)
+      if (argument != null) {
         builder.append(argument);
-      if (!iterator.hasNext())
+      }
+      if (!iterator.hasNext()) {
         break;
+      }
       builder.append(SPACE);
     }
     return builder.toString();

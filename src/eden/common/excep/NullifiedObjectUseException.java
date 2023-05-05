@@ -9,8 +9,8 @@ package eden.common.excep;
 public class NullifiedObjectUseException extends EDENRuntimeException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "Internal Error: The nullified object was used.";
+  protected static final String PROBLEM =
+    "Internal Error: The nullified object was used.";
 
   /** Makes a null instance. */
   public NullifiedObjectUseException() {

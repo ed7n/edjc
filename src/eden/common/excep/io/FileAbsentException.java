@@ -10,8 +10,7 @@ import eden.common.excep.EDENException;
 public class FileAbsentException extends EDENException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The file is absent.";
+  protected static final String PROBLEM = "The file is absent.";
 
   /** Makes an instance with the given file label. */
   public FileAbsentException(String file) {
@@ -19,6 +18,5 @@ public class FileAbsentException extends EDENException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FileAbsentException() {
-  }
+  protected FileAbsentException() {}
 }

@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Consists of utility methods for operating on strings. Methods that search in
- * arrays--via trailing arguments or explicit otherwise--return null if its
- * target string is not found.
+ * Utility methods for operating on strings. Methods that search in arrays--via
+ * trailing arguments or explicit otherwise--return null if its target string is
+ * not found.
  *
  * @author Brendon
  */
@@ -31,8 +31,11 @@ public class Strings {
 
   /** Returns the first non-empty string from the given strings. */
   public static String firstNonEmpty(String... strings) {
-    return Arrays.stream(strings)
-        .filter(string -> !string.isEmpty()).findFirst().orElse(null);
+    return Arrays
+      .stream(strings)
+      .filter(string -> !string.isEmpty())
+      .findFirst()
+      .orElse(null);
   }
 
   /** Returns the given string, passing null returns the given default. */
@@ -61,8 +64,9 @@ public class Strings {
   /** Ensures that the given string is not empty nor null. */
   public static String requireNonEmpty(String string, String label) {
     Objects.requireNonNull(string, label);
-    if (string.isEmpty())
+    if (string.isEmpty()) {
       throw new StringEmptyException(label);
+    }
     return string;
   }
 
@@ -72,6 +76,5 @@ public class Strings {
   }
 
   /** To prevent instantiations of this class. */
-  protected Strings() {
-  }
+  protected Strings() {}
 }

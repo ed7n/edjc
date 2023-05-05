@@ -8,12 +8,9 @@ package eden.common.excep.cd;
 public class TrackUnexpectedException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeUnexpectedProblem("track");
-
+  protected static final String PROBLEM = makeUnexpectedProblem("track");
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Correct its placement or number.";
+  protected static final String REMEDY = "Correct its placement or number.";
 
   /** Makes an instance with the given track number. */
   public TrackUnexpectedException(int track) {
@@ -31,6 +28,5 @@ public class TrackUnexpectedException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected TrackUnexpectedException() {
-  }
+  protected TrackUnexpectedException() {}
 }

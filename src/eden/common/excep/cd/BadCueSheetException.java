@@ -16,7 +16,6 @@ public class BadCueSheetException extends EDENRuntimeException {
 
   /** Subject label: at line. */
   protected static final String AT_LINE = "at line";
-
   /** Subject label: line. */
   protected static final String LINE = "Line";
 
@@ -32,21 +31,45 @@ public class BadCueSheetException extends EDENRuntimeException {
 
   /** Makes a subject string with the given track and index numbers. */
   public static String makeSubject(int track, int index) {
-    return CDLayoutObject.TRACK + SPACE + Numbers.toString2Digits(track) + SPACE
-        + CDLayoutObject.INDEX + SPACE + Numbers.toString2Digits(index);
+    return (
+      CDLayoutObject.TRACK +
+      SPACE +
+      Numbers.toString2Digits(track) +
+      SPACE +
+      CDLayoutObject.INDEX +
+      SPACE +
+      Numbers.toString2Digits(index)
+    );
   }
 
   /** Makes a subject string with the given track and line numbers. */
   public static String makeSubject(int track, long line) {
-    return CDLayoutObject.TRACK + SPACE + Numbers.toString2Digits(track) + SPACE
-        + AT_LINE + SPACE + Long.toString(line);
+    return (
+      CDLayoutObject.TRACK +
+      SPACE +
+      Numbers.toString2Digits(track) +
+      SPACE +
+      AT_LINE +
+      SPACE +
+      Long.toString(line)
+    );
   }
 
   /** Makes a subject string with the given track, index, and line numbers. */
   public static String makeSubject(int track, int index, long line) {
-    return CDLayoutObject.TRACK + SPACE + Numbers.toString2Digits(track) + SPACE
-        + CDLayoutObject.INDEX + SPACE + Numbers.toString2Digits(index) + SPACE
-        + AT_LINE + SPACE + Long.toString(line);
+    return (
+      CDLayoutObject.TRACK +
+      SPACE +
+      Numbers.toString2Digits(track) +
+      SPACE +
+      CDLayoutObject.INDEX +
+      SPACE +
+      Numbers.toString2Digits(index) +
+      SPACE +
+      AT_LINE +
+      SPACE +
+      Long.toString(line)
+    );
   }
 
   /** Makes a redefinition problem message with the given noun. */
@@ -64,9 +87,13 @@ public class BadCueSheetException extends EDENRuntimeException {
    * maximum values.
    */
   protected static String makeMisnumberRemedy(
-      String noun, int minimum, int maximum) {
-    return "Correct "
-        + noun + " to be within [" + minimum + ", " + maximum + "].";
+    String noun,
+    int minimum,
+    int maximum
+  ) {
+    return (
+      "Correct " + noun + " to be within [" + minimum + ", " + maximum + "]."
+    );
   }
 
   /** Makes an unexpected problem message with the given noun. */
@@ -89,7 +116,11 @@ public class BadCueSheetException extends EDENRuntimeException {
    * remedy.
    */
   protected BadCueSheetException(
-      int track, int index, String problem, String remedy) {
+    int track,
+    int index,
+    String problem,
+    String remedy
+  ) {
     this(makeSubject(track, index), problem, remedy);
   }
 
@@ -98,7 +129,11 @@ public class BadCueSheetException extends EDENRuntimeException {
    * remedy.
    */
   protected BadCueSheetException(
-      int track, long line, String problem, String remedy) {
+    int track,
+    long line,
+    String problem,
+    String remedy
+  ) {
     this(makeSubject(track, line), problem, remedy);
   }
 
@@ -107,17 +142,24 @@ public class BadCueSheetException extends EDENRuntimeException {
    * and remedy.
    */
   protected BadCueSheetException(
-      int track, int index, long line, String problem, String remedy) {
+    int track,
+    int index,
+    long line,
+    String problem,
+    String remedy
+  ) {
     this(makeSubject(track, index, line), problem, remedy);
   }
 
   /** Makes an instance with the given subject, problem, and remedy. */
   protected BadCueSheetException(
-      String subject, String problem, String remedy) {
+    String subject,
+    String problem,
+    String remedy
+  ) {
     super(subject, problem, remedy);
   }
 
   /** To prevent null instantiations of this class. */
-  protected BadCueSheetException() {
-  }
+  protected BadCueSheetException() {}
 }

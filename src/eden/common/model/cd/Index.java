@@ -17,19 +17,14 @@ public class Index extends CDLayoutObject {
 
   /** Null instance. */
   public static final Index nul = new Index(NUL_INT, NUL_INT);
-
   /** Maximum frame number in a CD. */
   public static final int MAX_FRAME = 449999;
-
   /** Maximum index number in a CD. */
   public static final int MAX_NUMBER = 99;
-
   /** Minimum frame number in a CD. */
   public static final int MIN_FRAME = 0;
-
   /** Minimum index number in a CD. */
   public static final int MIN_NUMBER = 0;
-
   /** Maximum number of indexes in a track. */
   public static final int MAX_COUNT = MAX_NUMBER - MIN_NUMBER + 1;
 
@@ -45,10 +40,8 @@ public class Index extends CDLayoutObject {
 
   /** FILE path. */
   protected String filePath;
-
   /** FILE type. */
   protected String fileType;
-
   /** Number arguments. */
   protected int frame, number;
 
@@ -69,8 +62,7 @@ public class Index extends CDLayoutObject {
   }
 
   /** To prevent null instantiations of this class. */
-  protected Index() {
-  }
+  protected Index() {}
 
   /** Sets its FILE path and type. */
   public void setFile(String filePath, String fileType) {
@@ -152,10 +144,13 @@ public class Index extends CDLayoutObject {
   @Override
   public List<CueSheetStatement> toStatements() {
     List<CueSheetStatement> out = new LinkedList<>();
-    out.add(new CueSheetStatement(
+    out.add(
+      new CueSheetStatement(
         INDENT_2 + INDEX,
         Numbers.toString2Digits(getNumber()),
-        CDDAFrame.toTimeCode(getFrame())));
+        CDDAFrame.toTimeCode(getFrame())
+      )
+    );
     getRems().forEach(rem -> out.add(new CueSheetStatement(INDENT_2_REM, rem)));
     forEachCustom((command, argument) -> {
       out.add(new CueSheetStatement(command, argument));
@@ -167,8 +162,9 @@ public class Index extends CDLayoutObject {
   /** {@inheritDoc} */
   @Override
   public void nullifyObject() {
-    if (isObjectNullified())
+    if (isObjectNullified()) {
       return;
+    }
     this.filePath = null;
     this.fileType = null;
     this.frame = NUL_INT;
@@ -179,8 +175,14 @@ public class Index extends CDLayoutObject {
   /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    return object == this || (object != null
-        && object.getClass() == getClass() && equals((Index) object));
+    return (
+      object == this ||
+      (
+        object != null &&
+        object.getClass() == getClass() &&
+        equals((Index) object)
+      )
+    );
   }
 
   /** Returns whether the given instance is equal to it. */
@@ -191,7 +193,13 @@ public class Index extends CDLayoutObject {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return Objects.hash(this.custom,
-        this.filePath, this.fileType, this.frame, this.number, this.remarks);
+    return Objects.hash(
+      this.custom,
+      this.filePath,
+      this.fileType,
+      this.frame,
+      this.number,
+      this.remarks
+    );
   }
 }

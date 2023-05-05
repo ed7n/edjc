@@ -6,7 +6,6 @@ package eden.common.model.media;
  * @author Brendon
  */
 public enum MediaTypeType {
-
   APPLICATION("application"),
   AUDIO("audio"),
   FONT("font"),

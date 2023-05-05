@@ -11,12 +11,15 @@ import eden.common.model.cd.Index;
 public class FrameMisnumberException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = EDENExceptions.makeMisnumberProblem("frame or time code");
-
+  protected static final String PROBLEM = EDENExceptions.makeMisnumberProblem(
+    "frame or time code"
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeMisnumberRemedy("it", Index.MIN_FRAME, Index.MAX_FRAME);
+  protected static final String REMEDY = makeMisnumberRemedy(
+    "it",
+    Index.MIN_FRAME,
+    Index.MAX_FRAME
+  );
 
   /** Makes an instance with the given track and index numbers. */
   public FrameMisnumberException(int track, int index) {
@@ -29,6 +32,5 @@ public class FrameMisnumberException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FrameMisnumberException() {
-  }
+  protected FrameMisnumberException() {}
 }

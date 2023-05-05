@@ -11,12 +11,13 @@ import eden.common.model.cd.CDLayoutObject;
 public class PostgapAgainException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = makeAgainProblem(CDLayoutObject.POSTGAP);
-
+  protected static final String PROBLEM = makeAgainProblem(
+    CDLayoutObject.POSTGAP
+  );
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = makeAgainRemedy(CDLayoutObject.POSTGAP);
+  protected static final String REMEDY = makeAgainRemedy(
+    CDLayoutObject.POSTGAP
+  );
 
   /** Makes an instance with the given track and line numbers. */
   public PostgapAgainException(int track, long line) {
@@ -29,6 +30,5 @@ public class PostgapAgainException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected PostgapAgainException() {
-  }
+  protected PostgapAgainException() {}
 }

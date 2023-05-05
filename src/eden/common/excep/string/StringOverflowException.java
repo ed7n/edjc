@@ -10,30 +10,29 @@ import static eden.common.shared.Constants.NUL_INT;
 public class StringOverflowException extends BadStringLengthException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The string is too long.";
-
+  protected static final String PROBLEM = "The string is too long.";
   /** Suggested remedy: at most. */
-  protected static final String REMEDY_MOST
-      = "Shorten the string to at least %1$d character(s) long.";
-
+  protected static final String REMEDY_MOST =
+    "Shorten the string to at least %1$d character(s) long.";
   /** Suggested remedy: exactly. */
-  protected static final String REMEDY_EXACT
-      = "Shorten the string to %1$d character(s) long.";
-
+  protected static final String REMEDY_EXACT =
+    "Shorten the string to %1$d character(s) long.";
   /** Suggested remedy: at most but at least. */
-  protected static final String REMEDY_LEAST
-      = "Shorten "
-      + "the string to at most %1$d but at least %2$d character(s) long.";
+  protected static final String REMEDY_LEAST =
+    "Shorten " +
+    "the string to at most %1$d but at least %2$d character(s) long.";
 
   /** Makes a remedy message with the given minimum and maximum lengths. */
   protected static String makeRemedy(int minimum, int maximum) {
-    if (maximum < 1)
+    if (maximum < 1) {
       throw new IllegalArgumentException("maximum < 1");
-    if (maximum == minimum)
+    }
+    if (maximum == minimum) {
       return String.format(REMEDY_EXACT, maximum);
-    if (minimum > 0 && maximum > minimum)
+    }
+    if (minimum > 0 && maximum > minimum) {
       return String.format(REMEDY_LEAST, maximum, minimum);
+    }
     return String.format(REMEDY_MOST, maximum);
   }
 

@@ -8,8 +8,7 @@ package eden.common.excep.string;
 public class StringEmptyException extends BadStringException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The string is empty.";
+  protected static final String PROBLEM = "The string is empty.";
 
   /** Makes an instance with the given string label. */
   public StringEmptyException(String string) {
@@ -17,6 +16,5 @@ public class StringEmptyException extends BadStringException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected StringEmptyException() {
-  }
+  protected StringEmptyException() {}
 }

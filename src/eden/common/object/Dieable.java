@@ -12,21 +12,20 @@ import eden.common.excep.DeadObjectUseException;
  * @author Brendon
  */
 public interface Dieable {
-
   /**
    * Ensures that it is not dead.
    *
    * @throws DeadObjectUseException If it is dead.
    */
   default Dieable requireNonDead() throws DeadObjectUseException {
-    if (isObjectDead())
+    if (isObjectDead()) {
       throw new DeadObjectUseException(toString());
+    }
     return this;
   }
 
   /** Marks itself dead with the given cause. */
   void die(Exception cause);
-
   /** Returns the cause of its death. */
   Exception getObjectDeathCause();
 

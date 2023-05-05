@@ -10,8 +10,7 @@ import eden.common.excep.EDENException;
 public class FileDirectoryException extends EDENException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The file is a directory.";
+  protected static final String PROBLEM = "The file is a directory.";
 
   /** Makes an instance with the given file label. */
   public FileDirectoryException(String file) {
@@ -19,6 +18,5 @@ public class FileDirectoryException extends EDENException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected FileDirectoryException() {
-  }
+  protected FileDirectoryException() {}
 }

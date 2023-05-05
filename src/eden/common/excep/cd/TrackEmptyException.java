@@ -8,12 +8,11 @@ package eden.common.excep.cd;
 public class TrackEmptyException extends BadCueSheetException {
 
   /** Problem description. */
-  protected static final String PROBLEM
-      = "The track has too few or no indexes.";
-
+  protected static final String PROBLEM =
+    "The track has too few or no indexes.";
   /** Suggested remedy. */
-  protected static final String REMEDY
-      = "Divide the track into at least indexes `00` and `01`.";
+  protected static final String REMEDY =
+    "Divide the track into at least indexes `00` and `01`.";
 
   /** Makes an instance with the given track number. */
   public TrackEmptyException(int track) {
@@ -31,6 +30,5 @@ public class TrackEmptyException extends BadCueSheetException {
   }
 
   /** To prevent null instantiations of this class. */
-  protected TrackEmptyException() {
-  }
+  protected TrackEmptyException() {}
 }
